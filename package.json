@@ -1,0 +1,25 @@
+{
+  "name": "node-server",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Baliaba/Stat_ClashR_Api.git"
+  },
+  "scripts": {
+    "cron": "node server.js",
+    "test": "node server_test.js",
+    "api": "node server_api.js"
+  },
+  "author": "stat-cr-clan",
+  "license": "Trizome inc",
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "cron": "^1.3.0",
+    "express": "~4.16.1",
+    "firebase-admin": "^5.8.1",
+    "jsonfile": "^4.0.0",
+    "lodash": "^4.17.4",
+    "mongoose": "~4.11.14",
+    "node-fetch": "^1.7.3"
+  }
+}
