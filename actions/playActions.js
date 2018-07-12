@@ -15,16 +15,16 @@ var battleHelpers = require('./../clanHelper/battleHelper.js');
                 let playerData = responses[0];
                 let battleData = responses[1];
                 //Traitements
-                helpers.traitementPlayer(playerData, schemas).then((mg) => {
-                    battleHelpers.TraitementBattle(battleData,conf,schemas,obj.clanTag)
-                    .then((msg)=>{
-                        // console.log(playerData)
-                        if(!refresh){
-                            qeueu.removeQueue(conf,obj.key,obj.clanTag);
-                        }
-                      }).catch((err)=>{console.log("err battles --",err.message)})
-                }).catch((err)=>{console.log("err play --",err.message)})
-
+                // helpers.traitementPlayer(playerData, schemas).then((mg) => {
+                //     battleHelpers.TraitementBattle(battleData,conf,schemas,obj.clanTag)
+                //     .then((msg)=>{
+                //         // console.log(playerData)
+                //         if(!refresh){
+                //             qeueu.removeQueue(conf,obj.key,obj.clanTag);
+                //         }
+                //       }).catch((err)=>{console.log("err battles --",err.message)})
+                // }).catch((err)=>{console.log("err play --",err.message)})
+            console.log(battleData)
         })
     })
 }
