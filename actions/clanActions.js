@@ -14,7 +14,7 @@ var warHelper = require('./../clanHelper/warHelper.js');
                 promiseWarlog = callApi.callapi(conf.url_clan+response.clan+"/warlog",conf.params);
                 Promise.all([promiseClan,promiseWar,promiseWarlog])
                 .then((resp) => {
-                    console.log("-------In Then")
+                    console.log("-------RESP CLAN", resp[0])
                 clanHelpers.initClan(resp[0], conf, schemas, response.key)
                     .then((urlPlay) => {
                         let data = {
