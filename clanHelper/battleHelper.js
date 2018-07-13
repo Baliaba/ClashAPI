@@ -1,12 +1,11 @@
 var mongoose = require('mongoose');
 var TraitementBattle = (data, conf, schemas,clanTag) => {
+   // console.log( data.error)
     var promise = new Promise((resolve, reject) => {
        //  console.log(data[0][0].type);
         var BattleL = mongoose.model('battlelight', schemas.battleLightSchema);
         var Battle = mongoose.model('battle', schemas.battleSchema);
-        data.forEach((player) => {
-            doStaff(player,conf,schemas,BattleL,Battle,clanTag);
-        })
+            doStaff(data,conf,schemas,BattleL,Battle,clanTag);
         let msg = " Battles was updated  on " + Date.now() + " Great job !";
         resolve(msg);
     });
@@ -14,7 +13,7 @@ var TraitementBattle = (data, conf, schemas,clanTag) => {
 }
 
 function doStaff(player, conf, schemas ,BattleL,Battle,clanTag) {
-    let battle = player
+    player.forEach((battle)=>{
     let idBattle = battle.utcTime + '_' + battle.team[0].tag;
     battle.maj = Date.now();
     Battle.findOneAndUpdate({
@@ -22,7 +21,7 @@ function doStaff(player, conf, schemas ,BattleL,Battle,clanTag) {
         }, {
             _id: idBattle,
             clan: clanTag,
-            json: battle
+            json: battle  
         }, {
             upsert: true,
             new: true,
@@ -80,6 +79,8 @@ function doStaff(player, conf, schemas ,BattleL,Battle,clanTag) {
                 console.log(err)
             }
         });
+    })
+    
 }
 module.exports = {
     TraitementBattle
