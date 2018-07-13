@@ -8,6 +8,7 @@ var battleHelpers = require('./../clanHelper/battleHelper.js');
     // get players url after updated clans dats
     clanAction.getData(conf, schemas,refresh,clanTag)
     .then((obj) => {
+	console.log("--------> inThen PlayActions")
         let playerPromise = callApi.callapi(obj.urlPlay+conf.freeOfBattlesCardsPath, conf.params);
         let battlePromise = callApi.callapi(obj.urlPlay+"/battles"+conf.freeOfOpponent,conf.params);
         Promise.all([playerPromise,battlePromise])
@@ -28,6 +29,7 @@ var battleHelpers = require('./../clanHelper/battleHelper.js');
                 //.catch((err)=>{console.log("err play --",err.message)})
         })
     })
+console.log("-----> Outside playActions")
 }
 
 var exports = module.exports = {

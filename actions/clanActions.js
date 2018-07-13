@@ -51,6 +51,7 @@ var warHelper = require('./../clanHelper/warHelper.js');
                     clanTag: clanTag,
                     key    :''
                 }
+	    if(resp[1].state != "notInWar" && resp[2].length >0){
                 obj ={
                     war : resp[1],
                     warlog : resp[2]
@@ -59,6 +60,7 @@ var warHelper = require('./../clanHelper/warHelper.js');
                     .then(talk =>{
                         console.log(talk);
                     })
+		}
                 resolve(data);
             }).catch((err)=>{console.log("tratiement clan  Error ",err.message)})
         })

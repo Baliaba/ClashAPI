@@ -7,9 +7,10 @@ var
     conf = require('./config/conf'),
     CronJob = require('cron').CronJob,
     router = require('./router/router'),
-    loop = require('./actions/playActions'),
+    loop = require('./actions/clanActions'),
     schemas = require('./models/schemas');
     queue = require('./services/queueService');
+
 job = new CronJob('*/1 * * * *', () => {
         loop.getData(conf, schemas,refresh=false);
     }, () => { /* CronJob every 2 seconds...*/
