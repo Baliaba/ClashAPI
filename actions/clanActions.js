@@ -8,13 +8,13 @@ var warHelper = require('./../clanHelper/warHelper.js');
             // call queueController to get url
             qeueu.getUrl(conf.database)
             .then((response) => {
-                console.log(response.url);
+                //console.log(response.url);
                 promiseClan = callApi.callapi(response.url, conf.params);
                 promiseWar = callApi.callapi(conf.url_clan+response.clan+"/war",conf.params);
                 promiseWarlog = callApi.callapi(conf.url_clan+response.clan+"/warlog",conf.params);
                 Promise.all([promiseClan,promiseWar,promiseWarlog])
                 .then((resp) => {
-                   // console.log(resp)
+                    console.log("-------In Then")
                 clanHelpers.initClan(resp[0], conf, schemas, response.key)
                     .then((urlPlay) => {
                         let data = {
@@ -37,6 +37,7 @@ var warHelper = require('./../clanHelper/warHelper.js');
                     //.catch((err)=>{console.log("tratiement clan  Error ",err.message)})
                 })
             }).catch((err)=>{console.log("Fetch queue Error",err.message)})
+	console.log("Outside Then ")
        }else{
         promiseClan = callApi.callapi(conf.url_clan+clanTag, conf.params);
         promiseWar = callApi.callapi(conf.url_clan+clanTag+"/war",conf.params);
