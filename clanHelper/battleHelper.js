@@ -12,8 +12,8 @@ var TraitementBattle = (data, conf, schemas,clanTag) => {
     return promise;
 }
 
-function doStaff(player, conf, schemas ,BattleL,Battle,clanTag) {
-    player.forEach((battle)=>{
+function doStaff(data, conf, schemas ,BattleL,Battle,clanTag) {
+    data.forEach((battle)=>{
     let idBattle = battle.utcTime + '_' + battle.team[0].tag;
     battle.maj = Date.now();
     Battle.findOneAndUpdate({
