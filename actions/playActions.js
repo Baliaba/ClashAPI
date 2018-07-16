@@ -5,17 +5,18 @@ var clanAction = require('./../actions/clanActions.js');
 var battleHelpers = require('./../clanHelper/battleHelper.js');
 
   getData = (conf,schemas,refresh,clanTag="") =>{
+    var promise = new Promise((resolve, reject) => {
     // get players url after updated clans dats
     clanAction.getData(conf, schemas,refresh,clanTag)
     .then((obj) => {
-	console.log(obj.urlPlay+conf.freeOfBattlesCardsPath)
+	    console.log(obj.urlPlay+conf.freeOfBattlesCardsPath)
         let playerPromise = callApi.callapi(obj.urlPlay+conf.freeOfBattlesCardsPath, conf.params);
         let battlePromise = callApi.callapi(obj.urlPlay+"/battles"+conf.freeOfOpponent,conf.params);
         Promise.all([playerPromise,battlePromise])
         .then((responses)=>{
                 let playerData = responses[0];
                 let battleData = responses[1];
-		console.log( responses[0] , responses[1])
+		        //console.log( responses[0])
                 //Traitements
                 helpers.traitementPlayer(playerData, schemas).then((mg) => {
                     battleHelpers.TraitementBattle(battleData,conf,schemas,obj.clanTag)
@@ -24,6 +25,7 @@ var battleHelpers = require('./../clanHelper/battleHelper.js');
                         if(!refresh){
                             qeueu.removeQueue(conf,obj.key,obj.clanTag);
                         }
+                        resolve('tasspé');
                       })
                       //.catch((err)=>{console.log("err battles --",err.message)})
                 })
@@ -31,6 +33,8 @@ var battleHelpers = require('./../clanHelper/battleHelper.js');
         })
 	console.log("Outside PromiseAll battlePlay")
     })
+})
+return promise;
 }
 
 var exports = module.exports = {

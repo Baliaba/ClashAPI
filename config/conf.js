@@ -34,7 +34,7 @@ const db_params_prod = {
 	_port: '27017/',
 	_db_name: 'stats-cr-clan'
 }
-const PORT = 8000;
+const PORT = 80;
 const options = {
 	useMongoClient: true,
 	reconnectTries: Number.MAX_VALUE,

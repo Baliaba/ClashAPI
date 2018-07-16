@@ -60,7 +60,6 @@ var initClan = (Clandata, conf, schemas, key) => {
                     //console.log("Clan was #"+ data.tag +" updated");
             }
         );
-	console.log("------------------------------",players)
         resolve(conf.url_player + players);
     });
     return promise;

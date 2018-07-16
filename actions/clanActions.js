@@ -2,6 +2,7 @@ var qeueu = require('./../controllers/queueController.js');
 var clanHelpers = require('./../clanHelper/clanHelper.js');
 var callApi = require('./../services/callServices.js');
 var warHelper = require('./../clanHelper/warHelper.js');
+var queueServ = require('./../services/queueService.js')
  getData = (conf, schemas,refresh,clanTag) => {
      var promise = new Promise((resolve, reject) => {
        if(!refresh){
@@ -14,14 +15,17 @@ var warHelper = require('./../clanHelper/warHelper.js');
                 promiseWarlog = callApi.callapi(conf.url_clan+response.clan+"/warlog",conf.params);
                 Promise.all([promiseClan,promiseWar,promiseWarlog])
                 .then((resp) => {
-                    console.log("-------RESP CLAN", resp[0])
+		if(resp[0].members.length === 0){
+		queueServ.removeQueue(conf,response.key,response.clan)  
+		reject({err : 'no members'})
+		}
                 clanHelpers.initClan(resp[0], conf, schemas, response.key)
                     .then((urlPlay) => {
                         let data = {
                             urlPlay: urlPlay,
                             clanTag: response.clan,
                         }
-                       console.log("--", resp[1].state );
+                       //console.log("--", resp[1].state );
                         if(resp[1].state !="notInWar" && resp[2].length > 0){
                             obj ={
                                 war : resp[1],
@@ -33,8 +37,7 @@ var warHelper = require('./../clanHelper/warHelper.js');
                             })
                         }
                         resolve(data);
-                    })
-                    //.catch((err)=>{console.log("tratiement clan  Error ",err.message)})
+                    }).catch((err)=>{console.log("tratiement clan  Error ",err.message)})
                 })
             }).catch((err)=>{console.log("Fetch queue Error",err.message)})
 	console.log("Outside Then ")
@@ -58,7 +61,7 @@ var warHelper = require('./../clanHelper/warHelper.js');
                 }
                 warHelper.TraitementWar(obj,conf,schemas,clanTag)
                     .then(talk =>{
-                        console.log(talk);
+                        //console.log(talk);
                     })
 		}
                 resolve(data);

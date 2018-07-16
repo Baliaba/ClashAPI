@@ -251,16 +251,25 @@ router.get('/new/:clanTag', async function (req, res) {
 		})
 })
 router.get('/refresh/:clanTag', async function (req, res) {
-	let clanTag = req.params.clanTag;
-	await loop.getData(conf, schemas,refresh=true,clanTag);
-		conf.database.ref('history/' + clanTag).set({
+	//let clanTag = req.params.clanTag;
+	const test=await loop.getData(conf, schemas,refresh=true,req.params.clanTag);
+	try{
+		conf.database.ref('history/' + req.params.clanTag).set({
 			maj: Date.now()
 		}).then(() => {
 			res.json({
 				'result': 'done',
-				'code': 200
+				'code': 200,
+				'test':test
 			});
 		})
+	}catch(err){
+		res.json({
+			'result': err,
+			'code': 500
+		});
+	}
+		
 	
 	//Rajouter la date de mise a jour coté firebase
 });
