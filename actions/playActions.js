@@ -25,7 +25,7 @@ var battleHelpers = require('./../clanHelper/battleHelper.js');
                         if(!refresh){
                             qeueu.removeQueue(conf,obj.key,obj.clanTag);
                         }
-                        resolve('tasspé');
+                        resolve(clanTag);
                       })
                       //.catch((err)=>{console.log("err battles --",err.message)})
                 })

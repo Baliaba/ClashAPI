@@ -234,14 +234,16 @@ router.get('/queue/add/:clantag', function (req, res) {
 
 router.get('/new/:clanTag', async function (req, res) {
 	let clanTag = req.params.clanTag;
-	await loop.getData(conf, schemas,refresh=true,clanTag);
+	const rep=await loop.getData(conf, schemas,refresh=true,clanTag);
+	try{
 		queue.addQueue(conf, req.params.clanTag);
 		conf.database.ref('history/' + req.params.clanTag).set({
 			maj: Date.now()
 		}).then(() => {
 			res.json({
 				'result': 'done',
-				'code': 200
+				'code': 200,
+				'clantag':rep
 			});
 		}).catch((err) => {
 			res.json({
@@ -249,18 +251,24 @@ router.get('/new/:clanTag', async function (req, res) {
 				'code': 500
 			});
 		})
+	} catch(err){
+		res.json({
+			'result': err,
+			'code': 500
+		});
+	}
 })
 router.get('/refresh/:clanTag', async function (req, res) {
-	//let clanTag = req.params.clanTag;
-	const test=await loop.getData(conf, schemas,refresh=true,req.params.clanTag);
+	let clanTag = req.params.clanTag;
+	const rep=await loop.getData(conf, schemas,refresh=true,clanTag);
 	try{
-		conf.database.ref('history/' + req.params.clanTag).set({
+		conf.database.ref('history/' + clanTag).set({
 			maj: Date.now()
 		}).then(() => {
 			res.json({
 				'result': 'done',
 				'code': 200,
-				'test':test
+				'clantag':rep
 			});
 		})
 	}catch(err){
@@ -269,8 +277,6 @@ router.get('/refresh/:clanTag', async function (req, res) {
 			'code': 500
 		});
 	}
-		
-	
 	//Rajouter la date de mise a jour coté firebase
 });
 
